@@ -385,7 +385,7 @@ trait DeltaVacuumSuiteBase extends QueryTest
         checkAnswer(sql(s"SELECT * FROM delta.`${dir.getAbsolutePath}`"), df1)
 
         // try reading cdc data
-        val e = intercept[SparkFileNotFoundException] {
+          val e = intercept[SparkFileNotFoundException] {
           spark.read
             .format("delta")
             .option(DeltaOptions.CDC_READ_OPTION, "true")
@@ -443,7 +443,7 @@ trait DeltaVacuumSuiteBase extends QueryTest
         assert(getCDCFiles(deltaLog).size === 1) // still just the one cdc file from before.
 
         // try reading cdc data
-        val e = intercept[SparkFileNotFoundException] {
+          val e = intercept[SparkFileNotFoundException] {
           spark.read
             .format("delta")
             .option(DeltaOptions.CDC_READ_OPTION, "true")
@@ -507,7 +507,6 @@ class DeltaVacuumSuite
           vacuumSQLTest(tablePath, viewName)
         }
         assert(
-          // TODO: Remove the following edge code after edge VACUUM supports 3L name resolution.
           e.getMessage.contains("'VACUUM' expects a table but `v` is a view") ||
             e.getMessage.contains("EXPECT_TABLE_NOT_VIEW.NO_ALTERNATIVE") ||
           e.getMessage.contains("v is a temp view. 'VACUUM' expects a table."))
